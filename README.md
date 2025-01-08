@@ -1,6 +1,6 @@
 # UA-Metronome
 
-Unity Adaptive Metronome (UA-Metronome) is a personal project, in inspiration of the plug-in for music production software 'Adaptive Metronome', where an attempt to compile a unity package that contains necessary assets needed to create projects within Unity. This looks at applying Linear Phase Correction Model proposed by Wing et al., 2014.
+Unity Adaptive Metronome (UA-Metronome) is a personal project, in inspiration of the plug-in for music production software 'Adaptive Metronome' by the [ARME Project](https://arme-project.co.uk/publication/2023_rppw_sean/), where an attempt to compile a unity package that contains necessary assets needed to create projects within Unity. This looks at applying Linear Phase Correction Model proposed by Wing et al., 2014.
 
 ---
 ### References
