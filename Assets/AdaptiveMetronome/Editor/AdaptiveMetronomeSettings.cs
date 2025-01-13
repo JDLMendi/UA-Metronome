@@ -1,9 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using System.IO;
-using System.Xml.Serialization;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 public class AdaptiveMetronomeSettingsWindow : EditorWindow
@@ -11,14 +7,14 @@ public class AdaptiveMetronomeSettingsWindow : EditorWindow
     private const int MaxPlayers = 4;
     private Vector2 scrollPosition;
 
-    // New fields for the Master Volume, MIDI file, and Backend Reference
-    private float masterVolume = 100f;  // Default Master Volume set to 100
+    // Metronome Settings 
+    private float masterVolume = 100f;
     private string midiFilePath = "";
-    private UnityEngine.Object adaptiveMetronomeBackend;  // Reference to Adaptive Metronome Backend
-
-    // Store references to runtime players directly
+    private AdaptiveMetronomeMain adaptiveMetronomeScript;
+    private int numIntroTones = 4;
     private AdaptiveMetronomePlayer[] playerReferences = new AdaptiveMetronomePlayer[MaxPlayers];
     private bool playersCreated = false;
+
 
     [MenuItem("Window/Adaptive Metronome")]
     public static void ShowWindow()
@@ -28,15 +24,22 @@ public class AdaptiveMetronomeSettingsWindow : EditorWindow
 
     private void OnEnable()
     {
-
+        Debug.Log("Adaptive Metronome has been loaded.");
     }
 
     private void OnGUI()
     {
-        // Check if AdaptiveMetronomeMain exists in the scene
+        // Main GUI drawing function to display all settings for the Adaptive Metronome.
+        DisplayGlobalSettings();
+        DisplayPlayerSettings();
+    }
+
+    private void DisplayGlobalSettings()
+    {
+        // Displays global settings for the Adaptive Metronome.
         if (UnityEngine.Object.FindFirstObjectByType<AdaptiveMetronomeMain>() == null)
         {
-            // If not, show the Create button
+            // If no AdaptiveMetronomeMain exists in the scene, show the "Create" button.
             if (GUILayout.Button("Create Adaptive Metronome"))
             {
                 CreateAdaptiveMetronome();
@@ -44,124 +47,165 @@ public class AdaptiveMetronomeSettingsWindow : EditorWindow
         }
         else
         {
-            // Once AdaptiveMetronomeMain exists, show the rest of the settings
+            // Display Global Settings if the AdaptiveMetronomeMain is already in the scene.
             GUILayout.BeginVertical("box");
-            GUILayout.Label("Global Settings", EditorStyles.boldLabel);
+            GUILayout.Label("Metronome Settings", EditorStyles.boldLabel);
 
-            // Master Volume
-            masterVolume = EditorGUILayout.Slider("Master Volume", masterVolume, 0f, 100f);
+            DisplayAdaptiveMetronomeScriptField();
+            DisplayIntroToneSettings();
+            DisplayMasterVolumeSettings();
 
-            // Load MIDI File
-            if (GUILayout.Button("Load MIDI File"))
-            {
-                midiFilePath = EditorUtility.OpenFilePanel("Load MIDI File", "", "mid,midi");
-                if (!string.IsNullOrEmpty(midiFilePath))
-                {
-                    Debug.Log("MIDI File Loaded: " + midiFilePath);
-                }
-            }
-            GUILayout.Label("MIDI File Path: " + midiFilePath);
+            GUILayout.Space(10);
+            DisplayMidiFileSettings();
 
-            // Reference to Adaptive Metronome Backend
-            adaptiveMetronomeBackend = EditorGUILayout.ObjectField("Adaptive Metronome Script", adaptiveMetronomeBackend, typeof(UnityEngine.Object), true);
+            GUILayout.Space(20);
+
+            // // Button to apply the changes made in the global settings.
+            // if (GUILayout.Button("Update Global Settings"))
+            // {
+            //     UpdateSettings();
+            // }
 
             GUILayout.EndVertical();
-            GUILayout.Space(20);  // Add space between global settings and players
+            GUILayout.Space(20);
+        }
+    }
 
-            // Check if all players exist, and if not, show the "Create Players" button
-            bool allPlayersExist = playerReferences.Length == MaxPlayers && playerReferences.All(player => player != null);
+    private void DisplayAdaptiveMetronomeScriptField()
+    {
+        // Displays a field to assign the AdaptiveMetronomeMain script object.
+        adaptiveMetronomeScript = (AdaptiveMetronomeMain)EditorGUILayout.ObjectField("Script", adaptiveMetronomeScript, typeof(AdaptiveMetronomeMain), true);
+    }
 
-            if (!allPlayersExist && GUILayout.Button("Create Players"))
+    private void DisplayIntroToneSettings()
+    {
+        // Displays a field for setting the number of intro tones.
+        numIntroTones = EditorGUILayout.IntField("Number of Intro Tones", numIntroTones);
+        adaptiveMetronomeScript.numIntroTones = numIntroTones;
+    }
+
+    private void DisplayMasterVolumeSettings()
+    {
+        // Displays a slider for adjusting the master volume.
+        masterVolume = EditorGUILayout.Slider("Master Volume", masterVolume, 0f, 100f);
+        adaptiveMetronomeScript.volume = masterVolume;
+    }
+
+    private void DisplayMidiFileSettings()
+    {
+        // Displays buttons to load a MIDI file and shows the selected MIDI file path.
+        GUILayout.Label("MIDI File");
+        if (GUILayout.Button("Load MIDI File"))
+        {
+            midiFilePath = EditorUtility.OpenFilePanel("Load MIDI File", "", "mid,midi");
+            if (!string.IsNullOrEmpty(midiFilePath))
             {
-                CreatePlayers();
+                Debug.Log("Filepath has been loaded to metronome");
+                adaptiveMetronomeScript.midiFile = midiFilePath;
             }
+        }
 
-            // Display player parameters once players are created
-            if (playersCreated)
+        GUILayout.Label("MIDI File Path: " + midiFilePath);
+    }
+
+    private void DisplayPlayerSettings()
+    {
+        // Displays settings related to players and their configuration.
+        bool allPlayersExist = playerReferences.Length == MaxPlayers && playerReferences.All(player => player != null);
+
+        if (!allPlayersExist && GUILayout.Button("Create Players"))
+        {
+            // If not all players exist, display the button to create new players.
+            CreatePlayers();
+        }
+
+        if (playersCreated)
+        {
+            GUILayout.Label("Player Parameters", EditorStyles.boldLabel);
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true);
+
+            for (int i = 0; i < MaxPlayers; i++)
             {
-                GUILayout.Label("Player Parameters", EditorStyles.boldLabel);
-                scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true);
+                GUILayout.BeginVertical("box");
+                GUILayout.Label($"Player {i + 1}", EditorStyles.boldLabel);
 
-                for (int i = 0; i < MaxPlayers; i++)
+                playerReferences[i] = (AdaptiveMetronomePlayer)EditorGUILayout.ObjectField("Player Object", playerReferences[i], typeof(AdaptiveMetronomePlayer), true);
+
+                if (playerReferences[i] != null)
                 {
-                    GUILayout.BeginVertical("box");
-                    GUILayout.Label($"Player {i + 1}", EditorStyles.boldLabel);
-
-                    // Store the reference of the player object in this GUI section
-                    playerReferences[i] = (AdaptiveMetronomePlayer)EditorGUILayout.ObjectField("Player Object", playerReferences[i], typeof(AdaptiveMetronomePlayer), true);
-
-                    if (playerReferences[i] != null)
-                    {
-
-                        playerReferences[i].playerData.volume = EditorGUILayout.Slider("Volume", playerReferences[i].playerData.volume, 0f, 1f);
-                        playerReferences[i].playerData.motorNoiseSTD = EditorGUILayout.FloatField("Motor Noise STD", playerReferences[i].playerData.motorNoiseSTD);
-                        playerReferences[i].playerData.timeKeeperNoiseSTD = EditorGUILayout.FloatField("Time Keeper Noise STD", playerReferences[i].playerData.timeKeeperNoiseSTD);
-
-                        GUILayout.Label("Alpha and Beta Pairs");
-                        for (int j = 0; j < 4; j++)
-                        {
-                            GUILayout.BeginHorizontal();
-                            playerReferences[i].playerData.alphaBetaPairs[j].x = EditorGUILayout.FloatField($"Alpha {j + 1}", playerReferences[i].playerData.alphaBetaPairs[j].x);
-                            playerReferences[i].playerData.alphaBetaPairs[j].y = EditorGUILayout.FloatField($"Beta {j + 1}", playerReferences[i].playerData.alphaBetaPairs[j].y);
-                            GUILayout.EndHorizontal();
-                        }
-                    }
-
-                    GUILayout.EndVertical();
-                    GUILayout.Space(10);
+                    // If the player object is not null, display and edit their settings.
+                    DisplayPlayerData(playerReferences[i]);
                 }
 
-                GUILayout.EndScrollView();
+                GUILayout.EndVertical();
+                GUILayout.Space(10);
             }
+
+            GUILayout.EndScrollView();
+        }
+    }
+
+    private void DisplayPlayerData(AdaptiveMetronomePlayer player)
+    {
+        // Displays settings for each player, including volume, noise levels, and alpha-beta pairs.
+        player.playerData.volume = EditorGUILayout.Slider("Volume", player.playerData.volume, 0f, 1f);
+        player.playerData.motorNoiseSTD = EditorGUILayout.FloatField("Motor Noise STD", player.playerData.motorNoiseSTD);
+        player.playerData.timeKeeperNoiseSTD = EditorGUILayout.FloatField("Time Keeper Noise STD", player.playerData.timeKeeperNoiseSTD);
+
+        GUILayout.Label("Alpha and Beta Pairs");
+        for (int j = 0; j < 4; j++)
+        {
+            GUILayout.BeginHorizontal();
+            player.playerData.alphaBetaPairs[j].x = EditorGUILayout.FloatField($"Alpha {j + 1}", player.playerData.alphaBetaPairs[j].x);
+            player.playerData.alphaBetaPairs[j].y = EditorGUILayout.FloatField($"Beta {j + 1}", player.playerData.alphaBetaPairs[j].y);
+            GUILayout.EndHorizontal();
         }
     }
 
     private void CreateAdaptiveMetronome()
     {
-        // Create AdaptiveMetronomeMain and Player GameObjects
+        // Creates a new AdaptiveMetronomeMain GameObject and assigns it to the script reference.
         GameObject newGameObject = new GameObject("Adaptive Metronome");
         AdaptiveMetronomeMain adaptiveMetronome = newGameObject.AddComponent<AdaptiveMetronomeMain>();
-        EditorPrefs.SetBool("AdaptiveMetronomeCreated", true);  // Mark as created in EditorPrefs
+        EditorPrefs.SetBool("AdaptiveMetronomeCreated", true);
         Debug.Log("Created new AdaptiveMetronomeMain GameObject.");
 
-        // Assign the created AdaptiveMetronomeMain to the backend reference
-        adaptiveMetronomeBackend = adaptiveMetronome;
+        adaptiveMetronomeScript = adaptiveMetronome;
+        adaptiveMetronomeScript.playerReferences = playerReferences;
 
-        // Assign player references to AdaptiveMetronomeMain
-        adaptiveMetronome.playerReferences = playerReferences;
-
-        // Ensure that the player references are set on the AdaptiveMetronomeMain
         Debug.Log("Assigned player references to AdaptiveMetronomeMain.");
     }
 
-
     private void CreatePlayers()
     {
-        // Create Player GameObjects and assign data
+        // Creates player GameObjects and initialises their settings.
         for (int i = 0; i < MaxPlayers; i++)
         {
             GameObject playerObject = new GameObject($"Player {i + 1}");
             AdaptiveMetronomePlayer player = playerObject.AddComponent<AdaptiveMetronomePlayer>();
 
-            // Initialise player data
-            player.playerData.volume = 1f;  // Set default volume to 1
-            player.playerData.motorNoiseSTD = 0.25f;  // Set default motorNoiseSTD to 0
-            player.playerData.timeKeeperNoiseSTD = 0.25f;  // Set default timeKeeperNoiseSTD to 0
+            player.playerData.volume = 1f;
+            player.playerData.motorNoiseSTD = 0.25f;
+            player.playerData.timeKeeperNoiseSTD = 0.25f;
 
-            // Set each alpha and beta pair to 0.1
             for (int j = 0; j < 4; j++)
             {
                 player.playerData.alphaBetaPairs[j].x = 0.1f;
                 player.playerData.alphaBetaPairs[j].y = 0.1f;
             }
 
-            // Assign the created player to the playerReferences array
             playerReferences[i] = player;
 
             Debug.Log($"Created Player {i + 1}");
         }
 
-        playersCreated = true;  // Mark players as created
+        playersCreated = true;
     }
 
+    private void UpdateSettings()
+    {
+        // Updates the global settings in the AdaptiveMetronomeScript.
+        adaptiveMetronomeScript.numIntroTones = this.numIntroTones;
+        adaptiveMetronomeScript.volume = this.masterVolume;
+    }
 }

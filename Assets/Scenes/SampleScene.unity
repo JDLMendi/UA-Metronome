@@ -119,55 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &282397605
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 282397607}
-  - component: {fileID: 282397606}
-  m_Layer: 0
-  m_Name: Adaptive Metronome
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &282397606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 282397605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 016e440a06ddd344081ccd56240ee7ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerReferences:
-  - {fileID: 1204202625}
-  - {fileID: 486226210}
-  - {fileID: 614340302}
-  - {fileID: 496585639}
---- !u!4 &282397607
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 282397605}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &311187611
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,7 +292,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &486226209
+--- !u!1 &534157493
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,158 +300,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 486226211}
-  - component: {fileID: 486226210}
+  - component: {fileID: 534157495}
+  - component: {fileID: 534157494}
   m_Layer: 0
-  m_Name: Player 2
+  m_Name: Adaptive Metronome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &486226210
+--- !u!114 &534157494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 486226209}
+  m_GameObject: {fileID: 534157493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cb93da707f3d4644843e19b7699a14f, type: 3}
+  m_Script: {fileID: 11500000, guid: 016e440a06ddd344081ccd56240ee7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData:
-    volume: 1
-    motorNoiseSTD: 0.25
-    timeKeeperNoiseSTD: 0.25
-    alphaBetaPairs:
-    - {x: 0.1, y: 0.1}
-    - {x: 0.1, y: 0.1}
-    - {x: 0.1, y: 0.1}
-    - {x: 0.1, y: 0.1}
-  onNotePlay:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &486226211
+  playerReferences:
+  - {fileID: 1651973527}
+  - {fileID: 1118731670}
+  - {fileID: 1400965548}
+  - {fileID: 1442121001}
+  numIntroTones: 4
+  volume: 50
+  midiFile: D:/Projects/ARME/Metronome Testing/haydn.mid
+  introToneClip: {fileID: 8300000, guid: 983783ff4b6bbe54cbaf61e61d948137, type: 3}
+--- !u!4 &534157495
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 486226209}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &496585638
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 496585640}
-  - component: {fileID: 496585639}
-  m_Layer: 0
-  m_Name: Player 4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &496585639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 496585638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cb93da707f3d4644843e19b7699a14f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerData:
-    volume: 1
-    motorNoiseSTD: 0.25
-    timeKeeperNoiseSTD: 0.25
-    alphaBetaPairs:
-    - {x: 0.1, y: 0.1}
-    - {x: 0.1, y: 0.1}
-    - {x: 0.1, y: 0.1}
-    - {x: 0.1, y: 0.1}
-  onNotePlay:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &496585640
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 496585638}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &614340301
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 614340303}
-  - component: {fileID: 614340302}
-  m_Layer: 0
-  m_Name: Player 3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &614340302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614340301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cb93da707f3d4644843e19b7699a14f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerData:
-    volume: 1
-    motorNoiseSTD: 0.25
-    timeKeeperNoiseSTD: 0.25
-    alphaBetaPairs:
-    - {x: 0.1, y: 0.1}
-    - {x: 0.1, y: 0.1}
-    - {x: 0.1, y: 0.1}
-    - {x: 0.1, y: 0.1}
-  onNotePlay:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &614340303
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614340301}
+  m_GameObject: {fileID: 534157493}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -729,7 +565,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1204202624
+--- !u!1 &1118731669
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -737,22 +573,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1204202626}
-  - component: {fileID: 1204202625}
+  - component: {fileID: 1118731671}
+  - component: {fileID: 1118731670}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: Player 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1204202625
+--- !u!114 &1118731670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204202624}
+  m_GameObject: {fileID: 1118731669}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cb93da707f3d4644843e19b7699a14f, type: 3}
@@ -770,13 +606,181 @@ MonoBehaviour:
   onNotePlay:
     m_PersistentCalls:
       m_Calls: []
---- !u!4 &1204202626
+--- !u!4 &1118731671
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204202624}
+  m_GameObject: {fileID: 1118731669}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1400965547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1400965549}
+  - component: {fileID: 1400965548}
+  m_Layer: 0
+  m_Name: Player 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1400965548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400965547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb93da707f3d4644843e19b7699a14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData:
+    volume: 1
+    motorNoiseSTD: 0.25
+    timeKeeperNoiseSTD: 0.25
+    alphaBetaPairs:
+    - {x: 0.1, y: 0.1}
+    - {x: 0.1, y: 0.1}
+    - {x: 0.1, y: 0.1}
+    - {x: 0.1, y: 0.1}
+  onNotePlay:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &1400965549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400965547}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1442121000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1442121002}
+  - component: {fileID: 1442121001}
+  m_Layer: 0
+  m_Name: Player 4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1442121001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442121000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb93da707f3d4644843e19b7699a14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData:
+    volume: 1
+    motorNoiseSTD: 0.25
+    timeKeeperNoiseSTD: 0.25
+    alphaBetaPairs:
+    - {x: 0.1, y: 0.1}
+    - {x: 0.1, y: 0.1}
+    - {x: 0.1, y: 0.1}
+    - {x: 0.1, y: 0.1}
+  onNotePlay:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &1442121002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442121000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1651973526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1651973528}
+  - component: {fileID: 1651973527}
+  m_Layer: 0
+  m_Name: Player 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1651973527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651973526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb93da707f3d4644843e19b7699a14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData:
+    volume: 1
+    motorNoiseSTD: 0.25
+    timeKeeperNoiseSTD: 0.25
+    alphaBetaPairs:
+    - {x: 0.1, y: 0.1}
+    - {x: 0.1, y: 0.1}
+    - {x: 0.1, y: 0.1}
+    - {x: 0.1, y: 0.1}
+  onNotePlay:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &1651973528
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651973526}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -826,8 +830,8 @@ SceneRoots:
   - {fileID: 1060820946}
   - {fileID: 411352933}
   - {fileID: 311187612}
-  - {fileID: 282397607}
-  - {fileID: 1204202626}
-  - {fileID: 486226211}
-  - {fileID: 614340303}
-  - {fileID: 496585640}
+  - {fileID: 534157495}
+  - {fileID: 1651973528}
+  - {fileID: 1118731671}
+  - {fileID: 1400965549}
+  - {fileID: 1442121002}
